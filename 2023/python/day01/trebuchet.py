@@ -1,29 +1,21 @@
 """
 https://adventofcode.com/2023/day/1
 """
-import textwrap
-from typing import List
+from typing import List, Optional, Tuple
 
 
 def trebuchet(input: str):
     calibration_values: List[int] = []
     for line in input.splitlines():
         digits: List[str] = list(filter(lambda c: c.isdigit(), line))
+
+        fl: Tuple[Optional[int], Optional[int]] = (None, None)
+
         if len(digits) > 1:
-            calibration_values.append(int(f"{digits[0]}{digits[-1]}"))
+            fl = (int(digits[0]), int(digits[-1]))
         if len(digits) == 1:
-            calibration_values.append(int(f"{digits[0]}{digits[0]}"))
+            fl = (int(digits[0]), int(digits[0]))
+
+        if fl[0] is not None:
+            calibration_values.append(int(f"{fl[0]}{fl[1]}"))
     return sum(calibration_values)
-
-
-if __name__ == "__main__":
-    input: str = textwrap.dedent(
-        """
-        1abc2
-        pqr3stu8vwx
-        a1b2c3d4e5f
-        treb7uchet
-        """
-    )
-
-    print(trebuchet(input))

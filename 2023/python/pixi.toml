@@ -7,6 +7,7 @@ channels = ["conda-forge"]
 platforms = ["linux-64"]
 
 [tasks]
+aoc = "python -m unittest -v"
 
 [dependencies]
 python = "3.12.0.*"
