@@ -4,7 +4,7 @@ https://adventofcode.com/2023/day/1
 from typing import List, Tuple
 
 
-def trebuchet(input: str):
+def trebuchet(input: str) -> int:
     result = 0
     for line in input.splitlines():
         digits: List[str] = list(filter(lambda c: c.isdigit(), line))
