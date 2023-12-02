@@ -2,6 +2,7 @@
 https://adventofcode.com/2023/day/2
 """
 
+import sys
 import re
 from enum import Enum
 from typing import List, Optional, Dict, Tuple
@@ -52,3 +53,12 @@ def parse_games(games: str) -> Dict[int, List[int]]:
         if gid:
             cubes[gid] = game_cubes
     return cubes
+
+
+def main(f: str):
+    with open(f) as input:
+        print("Day 02: {0:d}".format(sum(possible_games(input.read(), (12, 13, 14)))))
+
+
+if __name__ == "__main__":
+    main(sys.argv[1])
