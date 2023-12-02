@@ -1,0 +1,12 @@
+[project]
+name = "Advent of code 2023"
+version = "0.1.0"
+description = "Advent of code 2023"
+authors = ["Razvan-Daniel Mihai <84674+razvan@users.noreply.github.com>"]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tasks]
+
+[dependencies]
+python = "3.12.0.*"
