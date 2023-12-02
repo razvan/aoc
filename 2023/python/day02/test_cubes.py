@@ -1,7 +1,7 @@
 import unittest
 
 import textwrap
-from day02.cubes import parse_games, possible_games
+from day02.cubes import parse_games, possible_games, cube_set_power
 
 
 class Day02TestCase(unittest.TestCase):
@@ -26,3 +26,11 @@ class Day02TestCase(unittest.TestCase):
     def test_sum_id_possible_games(self):
         pgames = possible_games(self.input, (12, 13, 14))
         self.assertEqual(sum(pgames), 8)
+
+    def test_cube_set_power(self):
+        # 4,2,6      48
+        # 1,3,4      12
+        # 20,13,6    1560
+        # 14,3,15    630
+        # 6,3,2      36
+        self.assertEqual(cube_set_power(self.input), 2286)

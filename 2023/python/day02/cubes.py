@@ -4,6 +4,7 @@ https://adventofcode.com/2023/day/2
 
 import sys
 import re
+import math
 from enum import Enum
 from typing import List, Optional, Dict, Tuple
 
@@ -55,9 +56,20 @@ def parse_games(games: str) -> Dict[int, List[int]]:
     return cubes
 
 
+def cube_set_power(games: str) -> int:
+    max_cubes_per_game = parse_games(games)
+    return sum(map(lambda cubes: math.prod(cubes), max_cubes_per_game.values()))
+
+
 def main(f: str):
     with open(f) as input:
-        print("Day 02: {0:d}".format(sum(possible_games(input.read(), (12, 13, 14)))))
+        strin = input.read()
+        print(
+            "Day 02: sum of possible game ids is {0:d}".format(
+                sum(possible_games(strin, (12, 13, 14)))
+            )
+        )
+        print("Day 02: cube set power is {0:d}".format(cube_set_power(strin)))
 
 
 if __name__ == "__main__":
