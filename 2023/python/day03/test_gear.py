@@ -29,7 +29,7 @@ class Day03TestCase(unittest.TestCase):
 
     def test_symloc(self):
         es = parse_engine_schema(self.input)
-        got = [es.symloc(3, 6), es.symloc(0, 3)]
+        got = [es.is_symloc(3, 6), es.is_symloc(0, 3)]
         self.assertTrue(got, [True, False])
 
     def test_codes(self):
@@ -54,19 +54,23 @@ class Day03TestCase(unittest.TestCase):
 
     def test_adjacent_sym(self):
         es = parse_engine_schema(self.input)
-        self.assertTrue(es.adjacent_sym(0, 0, 3))  # 467, True
-        self.assertTrue(es.adjacent_sym(2, 2, 2))  # 35,  True
-        self.assertTrue(es.adjacent_sym(2, 6, 3))  # 633, True
-        self.assertTrue(es.adjacent_sym(4, 0, 3))  # 617, True
-        self.assertTrue(es.adjacent_sym(6, 2, 3))  # 592, True
-        self.assertTrue(es.adjacent_sym(7, 6, 3))  # 755, True
-        self.assertTrue(es.adjacent_sym(9, 1, 3))  # 664, True
-        self.assertTrue(es.adjacent_sym(9, 5, 3))  # 598, True
+        self.assertTrue(es.is_adjacent_sym(0, 0, 3))  # 467, True
+        self.assertTrue(es.is_adjacent_sym(2, 2, 2))  # 35,  True
+        self.assertTrue(es.is_adjacent_sym(2, 6, 3))  # 633, True
+        self.assertTrue(es.is_adjacent_sym(4, 0, 3))  # 617, True
+        self.assertTrue(es.is_adjacent_sym(6, 2, 3))  # 592, True
+        self.assertTrue(es.is_adjacent_sym(7, 6, 3))  # 755, True
+        self.assertTrue(es.is_adjacent_sym(9, 1, 3))  # 664, True
+        self.assertTrue(es.is_adjacent_sym(9, 5, 3))  # 598, True
 
-        self.assertFalse(es.adjacent_sym(0, 5, 3))  # 114, False
-        self.assertFalse(es.adjacent_sym(5, 7, 2))  # 58,  False
-        self.assertFalse(es.adjacent_sym(10, 9, 1))  # 1,   False
+        self.assertFalse(es.is_adjacent_sym(0, 5, 3))  # 114, False
+        self.assertFalse(es.is_adjacent_sym(5, 7, 2))  # 58,  False
+        self.assertFalse(es.is_adjacent_sym(10, 9, 1))  # 1,   False
 
-    def test_gear_ratios(self):
+    def test_part_numbers(self):
         es = parse_engine_schema(self.input)
-        self.assertEqual(es.gear_ratios(), [467, 35, 633, 617, 592, 755, 664, 598])
+        self.assertEqual(es.part_numbers(), [467, 35, 633, 617, 592, 755, 664, 598])
+
+    def test_gear_numbers(self):
+        es = parse_engine_schema(self.input)
+        self.assertEqual(es.gear_numbers(), [(467, 35), (755, 598)])

@@ -46,34 +46,37 @@ class EngineSchema:
             digits = []
         return result
 
-    def symloc(self, i: int, j: int) -> bool:
+    def is_symloc(self, i: int, j: int) -> bool:
         if i < 0 or i >= self.rows:
             return False
         if j < 0 or j >= self.cols:
             return False
         return issymbol(self.schema[(i, j)])
 
-    def adjacent_sym(self, row: int, col: int, code_len: int) -> bool:
+    def is_adjacent_sym(self, row: int, col: int, code_len: int) -> bool:
         # check previous row including the diagonals NW and NE
         for j in range(col - 1, col + code_len + 1):
-            if self.symloc(row - 1, j):
+            if self.is_symloc(row - 1, j):
                 return True
         # check next row including the diagonals SW and SE
         for j in range(col - 1, col + code_len + 1):
-            if self.symloc(row + 1, j):
+            if self.is_symloc(row + 1, j):
                 return True
         # check east and west
-        if self.symloc(row, col - 1) or self.symloc(row, col + code_len):
+        if self.is_symloc(row, col - 1) or self.is_symloc(row, col + code_len):
             return True
 
         return False
 
-    def gear_ratios(self) -> List[int]:
+    def part_numbers(self) -> List[int]:
         result: List[int] = []
         for i, j, snum in self.codes():
-            if self.adjacent_sym(i, j, len(snum)):
+            if self.is_adjacent_sym(i, j, len(snum)):
                 result.append(int(snum))
         return result
+
+    def gear_numbers(self) -> List[Tuple[int, int]]:
+        return []
 
     def __repr__(self) -> str:
         lines = []
@@ -104,7 +107,7 @@ def main(f: str):
     with open(f) as input:
         strin = input.read()
         e = parse_engine_schema(strin)
-        print("Day 03: sum of geat ratios is {}".format(sum(e.gear_ratios())))
+        print("Day 03: sum of the part numbers is {}".format(sum(e.part_numbers())))
 
 
 if __name__ == "__main__":
