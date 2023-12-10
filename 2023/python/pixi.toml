@@ -12,3 +12,4 @@ aoc = "python aoc.py"
 
 [dependencies]
 python = "3.12.0.*"
+parsy = "2.1.*"

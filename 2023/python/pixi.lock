@@ -308,6 +308,26 @@ package:
   size: 2854103
   timestamp: 1701162437033
 - platform: linux-64
+  name: parsy
+  version: '2.1'
+  category: main
+  manager: conda
+  dependencies:
+  - python >=3.7
+  url: https://conda.anaconda.org/conda-forge/noarch/parsy-2.1-pyhd8ed1ab_0.conda
+  hash:
+    md5: 0423aa726dfb35b9a236ea3d572b8b74
+    sha256: 0eabc374ac44066578c25172e7b4d33317b1a6bbdee3d0a8ded6927544e9cafc
+  build: pyhd8ed1ab_0
+  arch: x86_64
+  subdir: linux-64
+  build_number: 0
+  license: MIT
+  license_family: MIT
+  noarch: python
+  size: 14481
+  timestamp: 1677097346745
+- platform: linux-64
   name: python
   version: 3.12.0
   category: main
