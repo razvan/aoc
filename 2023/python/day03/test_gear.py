@@ -73,4 +73,8 @@ class Day03TestCase(unittest.TestCase):
 
     def test_gear_numbers(self):
         es = parse_engine_schema(self.input)
-        self.assertEqual(es.gear_numbers(), [(467, 35), (755, 598)])
+        self.assertEqual(es.gear_numbers(), [[467, 35], [755, 598]])
+
+    def test_sum_gear_ratios(self):
+        es = parse_engine_schema(self.input)
+        self.assertEqual(es.sum_gear_ratios(), 467835)
