@@ -1,0 +1,1 @@
+from .scratchcards import main

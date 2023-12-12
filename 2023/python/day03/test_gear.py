@@ -1,6 +1,6 @@
 import unittest
 
-from day03.gear import parse_engine_schema
+from .gear import parse_engine_schema
 
 
 class Day03TestCase(unittest.TestCase):
