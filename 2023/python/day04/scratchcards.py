@@ -1,21 +1,27 @@
-from dataclasses import dataclass, field
-from parsy import eof, string, regex, seq
-from typing import List
 import sys
+from collections import deque
+from dataclasses import dataclass, field
+from functools import cached_property
+from typing import List
+
+from parsy import eof, regex, seq, string
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class Card:
     id: int = field(default=0)
     winning: List[int] = field(default_factory=list)
     owning: List[int] = field(default_factory=list)
 
+    @cached_property
+    def matching(self):
+        return len(set(self.winning).intersection(set(self.owning)))
+
     def points(self) -> int:
-        matching: int = len(set(self.winning).intersection(set(self.owning)))
-        if matching < 2:
-            return matching
+        if self.matching < 2:
+            return self.matching
         else:
-            return 2 ** (matching - 1)
+            return 2 ** (self.matching - 1)
 
 
 @dataclass(frozen=True, slots=True)
@@ -24,6 +30,20 @@ class Scratchcards:
 
     def points(self) -> int:
         return sum(map(lambda c: c.points(), self.cards))
+
+    def winning_cards(self) -> int:
+        result = 0
+        queue = deque(self.cards)
+        while len(queue) > 0:
+            card = queue.popleft()
+            result += 1
+
+            if card.id < len(self.cards):
+                queue.extend(
+                    self.cards[card.id : min(len(self.cards), card.id + card.matching)]
+                )
+
+        return result
 
 
 str_card = string("Card")
@@ -55,6 +75,7 @@ def main(f: str):
         strin = input.read()
         scratchcards = parse(strin)
         print("Day 04: scratchcards points {}".format(scratchcards.points()))
+        print("Day 04: winning scratchcards {}".format(scratchcards.winning_cards()))
 
 
 if __name__ == "__main__":

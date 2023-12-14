@@ -28,3 +28,7 @@ class Day04TestCase(unittest.TestCase):
                 owning=[74, 77, 10, 23, 35, 67, 36, 11],
             ),
         )
+
+    def test_scratchcards_winning(self):
+        cards: Scratchcards = parse(self.input)
+        self.assertEqual(cards.winning_cards(), 30)
