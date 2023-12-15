@@ -1,5 +1,5 @@
 import sys
-from collections import deque
+from array import array
 from dataclasses import dataclass, field
 from functools import cached_property
 from typing import List
@@ -32,18 +32,19 @@ class Scratchcards:
         return sum(map(lambda c: c.points(), self.cards))
 
     def winning_cards(self) -> int:
-        result = 0
-        queue = deque(self.cards)
-        while len(queue) > 0:
-            card = queue.popleft()
-            result += 1
+        len_cards = len(self.cards)
+        seen_cards = array("L", [1 for _ in range(len_cards)])
 
-            if card.id < len(self.cards):
-                queue.extend(
-                    self.cards[card.id : min(len(self.cards), card.id + card.matching)]
-                )
+        for i, c in enumerate(self.cards):
+            # print(seen_cards)
+            copies = seen_cards[i]
+            _from = min(len_cards, i + 1)
+            _to = min(len_cards, i + c.matching + 1)
+            seen_cards[_from:_to] = array(
+                "L", [x + copies for x in seen_cards[_from:_to]]
+            )
 
-        return result
+        return sum(seen_cards)
 
 
 str_card = string("Card")
