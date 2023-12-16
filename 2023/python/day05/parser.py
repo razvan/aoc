@@ -1,5 +1,5 @@
-from parsy import generate, regex, string, Parser, success, eof, whitespace
-from typing import Generator, List
+from parsy import generate, regex, string, success, eof, whitespace
+from typing import List
 from .model import Almanac, Range, RangeMap
 
 _padding = regex(r"\s*")  # optional whitespace
@@ -18,7 +18,7 @@ _s_map_name = (
 
 
 @generate
-def seeds() -> Generator[Parser, List[int], None]:
+def seeds():
     res: List[int] = []
     yield _padding >> _s_seeds >> whitespace
     res = yield _num.sep_by(whitespace)
@@ -26,7 +26,7 @@ def seeds() -> Generator[Parser, List[int], None]:
 
 
 @generate
-def env_map() -> Generator[Parser, RangeMap, None]:
+def env_map():
     mname = yield _padding >> _s_map_name << _padding
     r: List[Range] = []
     while True:
@@ -41,7 +41,7 @@ def env_map() -> Generator[Parser, RangeMap, None]:
 
 
 @generate
-def almanac() -> Generator[Parser, Almanac, None]:
+def almanac():
     s = yield seeds
     rms = yield env_map.many()
     return Almanac(s, rms)
