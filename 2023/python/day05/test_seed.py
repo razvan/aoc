@@ -79,3 +79,50 @@ class Day05TestCase(TestCase):
     def test_min_location(self):
         a = almanac.parse(self.input)
         self.assertTrue(35, a.min_location())
+
+    def test_min_location_seed_ranges(self):
+        a = almanac.parse(self.input)
+        self.assertTrue(46, a.min_location_seed_ranges())
+
+    def test_min_loc_seed_range2(self):
+        """
+        79, 80, ..., 89, 90, 91, 92, 93
+        55, 56, ..., 65, 66, 67, 68
+
+        55 -> 57
+        """
+        input = textwrap.dedent(
+            """
+            seeds: 79 14 55 13
+
+            seed-to-soil map:
+            50 98 2
+            52 50 48
+            """
+        )
+        a = almanac.parse(input)
+        self.assertTrue(57, a.min_location_seed_ranges())
+
+    def test_min_loc_seed_range3(self):
+        """
+        79, 80, ..., 89, 90, 91, 92, 93
+        55, 56, ..., 65, 66, 67, 68
+
+        55 -> 57
+        """
+        input = textwrap.dedent(
+            """
+            seeds: 79 14 55 13
+
+            seed-to-soil map:
+            50 98 2
+            52 50 48
+
+            soil-to-fertilizer map:
+            0 15 37
+            37 52 2
+            39 0 15
+            """
+        )
+        a = almanac.parse(input)
+        self.assertTrue(37, a.min_location_seed_ranges())
