@@ -309,54 +309,6 @@ package:
   size: 704696
   timestamp: 1674833944779
 - platform: linux-64
-  name: libblas
-  version: 3.9.0
-  category: main
-  manager: conda
-  dependencies:
-  - libopenblas >=0.3.25,<0.3.26.0a0
-  - libopenblas >=0.3.25,<1.0a0
-  url: https://conda.anaconda.org/conda-forge/linux-64/libblas-3.9.0-20_linux64_openblas.conda
-  hash:
-    md5: 2b7bb4f7562c8cf334fc2e20c2d28abc
-    sha256: 8a0ee1de693a9b3da4a11b95ec81b40dd434bd01fa1f5f38f8268cd2146bf8f0
-  build: 20_linux64_openblas
-  arch: x86_64
-  subdir: linux-64
-  build_number: 20
-  constrains:
-  - liblapacke 3.9.0 20_linux64_openblas
-  - libcblas 3.9.0 20_linux64_openblas
-  - blas * openblas
-  - liblapack 3.9.0 20_linux64_openblas
-  license: BSD-3-Clause
-  license_family: BSD
-  size: 14433
-  timestamp: 1700568383457
-- platform: linux-64
-  name: libcblas
-  version: 3.9.0
-  category: main
-  manager: conda
-  dependencies:
-  - libblas 3.9.0 20_linux64_openblas
-  url: https://conda.anaconda.org/conda-forge/linux-64/libcblas-3.9.0-20_linux64_openblas.conda
-  hash:
-    md5: 36d486d72ab64ffea932329a1d3729a3
-    sha256: 0e34fb0f82262f02fcb279ab4a1db8d50875dc98e3019452f8f387e6bf3c0247
-  build: 20_linux64_openblas
-  arch: x86_64
-  subdir: linux-64
-  build_number: 20
-  constrains:
-  - liblapacke 3.9.0 20_linux64_openblas
-  - blas * openblas
-  - liblapack 3.9.0 20_linux64_openblas
-  license: BSD-3-Clause
-  license_family: BSD
-  size: 14383
-  timestamp: 1700568410580
-- platform: linux-64
   name: libexpat
   version: 2.5.0
   category: main
@@ -419,46 +371,6 @@ package:
   size: 773629
   timestamp: 1699753612541
 - platform: linux-64
-  name: libgfortran-ng
-  version: 13.2.0
-  category: main
-  manager: conda
-  dependencies:
-  - libgfortran5 13.2.0 ha4646dd_3
-  url: https://conda.anaconda.org/conda-forge/linux-64/libgfortran-ng-13.2.0-h69a702a_3.conda
-  hash:
-    md5: 73031c79546ad06f1fe62e57fdd021bc
-    sha256: 5b918950b84605b6865de438757f507b1eff73c96fd562f7022c80028b088c14
-  build: h69a702a_3
-  arch: x86_64
-  subdir: linux-64
-  build_number: 3
-  license: GPL-3.0-only WITH GCC-exception-3.1
-  license_family: GPL
-  size: 23837
-  timestamp: 1699753845201
-- platform: linux-64
-  name: libgfortran5
-  version: 13.2.0
-  category: main
-  manager: conda
-  dependencies:
-  - libgcc-ng >=13.2.0
-  url: https://conda.anaconda.org/conda-forge/linux-64/libgfortran5-13.2.0-ha4646dd_3.conda
-  hash:
-    md5: c714d905cdfa0e70200f68b80cc04764
-    sha256: 0084a1d29a4f8ee3b8edad80eb6c42e5f0480f054f28cf713fb314bebb347a50
-  build: ha4646dd_3
-  arch: x86_64
-  subdir: linux-64
-  build_number: 3
-  constrains:
-  - libgfortran-ng 13.2.0
-  license: GPL-3.0-only WITH GCC-exception-3.1
-  license_family: GPL
-  size: 1436929
-  timestamp: 1699753630186
-- platform: linux-64
   name: libgomp
   version: 13.2.0
   category: main
@@ -478,29 +390,6 @@ package:
   size: 421834
   timestamp: 1699753531479
 - platform: linux-64
-  name: liblapack
-  version: 3.9.0
-  category: main
-  manager: conda
-  dependencies:
-  - libblas 3.9.0 20_linux64_openblas
-  url: https://conda.anaconda.org/conda-forge/linux-64/liblapack-3.9.0-20_linux64_openblas.conda
-  hash:
-    md5: 6fabc51f5e647d09cc010c40061557e0
-    sha256: ad7745b8d0f2ccb9c3ba7aaa7167d62fc9f02e45eb67172ae5f0dfb5a3b1a2cc
-  build: 20_linux64_openblas
-  arch: x86_64
-  subdir: linux-64
-  build_number: 20
-  constrains:
-  - liblapacke 3.9.0 20_linux64_openblas
-  - libcblas 3.9.0 20_linux64_openblas
-  - blas * openblas
-  license: BSD-3-Clause
-  license_family: BSD
-  size: 14350
-  timestamp: 1700568424034
-- platform: linux-64
   name: libnsl
   version: 2.0.1
   category: main
@@ -519,29 +408,6 @@ package:
   license_family: GPL
   size: 33408
   timestamp: 1697359010159
-- platform: linux-64
-  name: libopenblas
-  version: 0.3.25
-  category: main
-  manager: conda
-  dependencies:
-  - libgcc-ng >=12
-  - libgfortran-ng
-  - libgfortran5 >=12.3.0
-  url: https://conda.anaconda.org/conda-forge/linux-64/libopenblas-0.3.25-pthreads_h413a1c8_0.conda
-  hash:
-    md5: d172b34a443b95f86089e8229ddc9a17
-    sha256: 628564517895ee1b09cf72c817548bd80ef1acce6a8214a8520d9f7b44c4cfaf
-  build: pthreads_h413a1c8_0
-  arch: x86_64
-  subdir: linux-64
-  build_number: 0
-  constrains:
-  - openblas >=0.3.25,<0.3.26.0a0
-  license: BSD-3-Clause
-  license_family: BSD
-  size: 5545169
-  timestamp: 1700536004164
 - platform: linux-64
   name: libsqlite
   version: 3.44.2
@@ -638,33 +504,6 @@ package:
   size: 884434
   timestamp: 1698751260967
 - platform: linux-64
-  name: numpy
-  version: 1.26.2
-  category: main
-  manager: conda
-  dependencies:
-  - libblas >=3.9.0,<4.0a0
-  - libcblas >=3.9.0,<4.0a0
-  - libgcc-ng >=12
-  - liblapack >=3.9.0,<4.0a0
-  - libstdcxx-ng >=12
-  - python >=3.12,<3.13.0a0
-  - python_abi 3.12.* *_cp312
-  url: https://conda.anaconda.org/conda-forge/linux-64/numpy-1.26.2-py312heda63a1_0.conda
-  hash:
-    md5: 6d7b0ae4472449b7893345c015f486d3
-    sha256: d7fde9d38f4c9e41503a0f5e20a2d53918c52cb7e60ae3814ff8a4e59c2b39f8
-  build: py312heda63a1_0
-  arch: x86_64
-  subdir: linux-64
-  build_number: 0
-  constrains:
-  - numpy-base <0a0
-  license: BSD-3-Clause
-  license_family: BSD
-  size: 7598150
-  timestamp: 1700874851101
-- platform: linux-64
   name: openssl
   version: 3.2.0
   category: main
@@ -687,26 +526,6 @@ package:
   size: 2854103
   timestamp: 1701162437033
 - platform: linux-64
-  name: packaging
-  version: '23.2'
-  category: main
-  manager: conda
-  dependencies:
-  - python >=3.7
-  url: https://conda.anaconda.org/conda-forge/noarch/packaging-23.2-pyhd8ed1ab_0.conda
-  hash:
-    md5: 79002079284aa895f883c6b7f3f88fd6
-    sha256: 69b3ace6cca2dab9047b2c24926077d81d236bef45329d264b394001e3c3e52f
-  build: pyhd8ed1ab_0
-  arch: x86_64
-  subdir: linux-64
-  build_number: 0
-  license: Apache-2.0
-  license_family: APACHE
-  noarch: python
-  size: 49452
-  timestamp: 1696202521121
-- platform: linux-64
   name: parsy
   version: '2.1'
   category: main
@@ -726,29 +545,6 @@ package:
   noarch: python
   size: 14481
   timestamp: 1677097346745
-- platform: linux-64
-  name: polars
-  version: 0.19.19
-  category: main
-  manager: conda
-  dependencies:
-  - libgcc-ng >=12
-  - numpy >=1.16.0
-  - packaging
-  - python >=3.12,<3.13.0a0
-  - python_abi 3.12.* *_cp312
-  url: https://conda.anaconda.org/conda-forge/linux-64/polars-0.19.19-py312h5589f98_0.conda
-  hash:
-    md5: e245dcb6602e8533f542df5e92030bc7
-    sha256: a80fc66c7f5cf085a1ef1574788feef2c4a85c7629232673acf99ed5839d1d37
-  build: py312h5589f98_0
-  arch: x86_64
-  subdir: linux-64
-  build_number: 0
-  license: MIT
-  license_family: MIT
-  size: 20397447
-  timestamp: 1701475787363
 - platform: linux-64
   name: pygments
   version: 2.17.2
