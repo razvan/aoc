@@ -64,6 +64,7 @@ class Hand:
     _type: HandType = field(init=False)
 
     def __post_init__(self):
+        """Compute the hand type"""
         mc = Counter(self.cards).most_common()
         if len(mc) == 5:
             self._type = HandType.HighCard
@@ -87,12 +88,6 @@ class Hand:
             return self.cards < other.cards
         else:
             return self._type < other._type
-
-
-def sort_by_card_and_count(input: List[Tuple[Card, int]]) -> List[Tuple[Card, int]]:
-    input.sort(key=lambda t: t[0], reverse=True)
-    input.sort(key=lambda t: t[1], reverse=True)
-    return input
 
 
 @dataclass(frozen=True, slots=True)
