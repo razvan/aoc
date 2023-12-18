@@ -21,8 +21,11 @@ class Race:
 class Event:
     races: List[Race] = field(default_factory=list)
 
-    def count_winning(self) -> int:
+    def part1(self) -> int:
         return prod([r.count_winning() for r in self.races])
+
+    def part2(self) -> int:
+        return sum([r.count_winning() for r in self.races])
 
 
 @generate
@@ -35,11 +38,14 @@ def parser():
     return Event([Race(t, d) for t, d in zip(times, dist)])
 
 
-def main(f: str):
-    with open(f) as input:
+def main(f: List[str]):
+    with open(f[0]) as input:
         strin = input.read()
-        print("Day 06: part 1 is {}".format(parser.parse(strin).count_winning()))
+        print("Day 06: part 1 is {}".format(parser.parse(strin).part1()))
+    with open(f[1]) as input:
+        strin = input.read()
+        print("Day 06: part 2 is {}".format(parser.parse(strin).part2()))
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[1:])

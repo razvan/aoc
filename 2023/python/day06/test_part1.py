@@ -25,5 +25,14 @@ class Day06(TestCase):
 
     def test_day06_event_count_winning(self):
         ev = parser.parse(self.input)
-        got = ev.count_winning()
+        got = ev.part1()
         self.assertEqual(288, got)
+
+    def test_day06_part_two(self):
+        input = """
+        Time:      71530
+        Distance:  940200
+        """
+        ev = parser.parse(input)
+        got = ev.part2()
+        self.assertEqual(71503, got)
