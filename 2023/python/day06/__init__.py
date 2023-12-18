@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-import sys
 from parsy import eof, generate, regex, string, whitespace
 from typing import List, Tuple, Iterable
 from math import prod
@@ -45,7 +44,3 @@ def main(f: List[str]):
     with open(f[1]) as input:
         strin = input.read()
         print("Day 06: part 2 is {}".format(parser.parse(strin).part2()))
-
-
-if __name__ == "__main__":
-    main(sys.argv[1:])

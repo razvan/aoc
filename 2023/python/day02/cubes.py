@@ -2,7 +2,6 @@
 https://adventofcode.com/2023/day/2
 """
 
-import sys
 from typing import Iterable, List, Tuple
 from .parser import parse
 from .model import Game
@@ -31,7 +30,3 @@ def main(f: str):
             )
         )
         print("Day 02: cube set power is {0:d}".format(cube_set_power(strin)))
-
-
-if __name__ == "__main__":
-    main(sys.argv[1])
