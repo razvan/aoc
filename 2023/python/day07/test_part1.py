@@ -1,6 +1,5 @@
-from unittest import TestCase, expectedFailure
-from . import parser, Game, Hand, Card, card_from
-from pprint import pprint
+from unittest import TestCase
+from .part1 import parser, Game, Hand, card_from
 
 
 class Day07(TestCase):
