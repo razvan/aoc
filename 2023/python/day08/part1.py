@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Dict, Tuple
+from typing import Dict, Tuple
 from itertools import cycle
 
 from parsy import eof, generate, regex, string, whitespace, success
@@ -7,8 +7,12 @@ from parsy import eof, generate, regex, string, whitespace, success
 
 @dataclass(frozen=True, slots=True)
 class Puzzle:
+    # directions. A string of L (left) an R (right) instructions.
     dirs: str
+    # Start location. Always "AAA"
     start: str
+    # Mapping between a start location and two possible next locations,
+    # left and right.
     locs: Dict[str, Tuple[str, str]]
 
 
@@ -19,6 +23,10 @@ def run(f: str):
 
 
 def solve(puzzle: Puzzle) -> int:
+    """Returns the number of "moves" (left and right) are required
+    to arrive from the start location ("AAA") and arrive to the
+    final location ("ZZZ").
+    """
     loc = puzzle.start
     moves = 0
     for dir in cycle(puzzle.dirs):
