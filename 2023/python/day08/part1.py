@@ -22,7 +22,7 @@ def solve(puzzle: Puzzle) -> int:
     loc = puzzle.start
     moves = 0
     for dir in cycle(puzzle.dirs):
-        if final_loc(loc, puzzle.locs[loc]):
+        if loc == "ZZZ":
             break
         loc = next_loc(dir, puzzle.locs[loc])
         moves += 1
@@ -37,10 +37,6 @@ def next_loc(dir: str, locs: Tuple[str, str]) -> str:
         return locs[1]
 
 
-def final_loc(loc: str, locs: Tuple[str, str]) -> bool:
-    return (loc, loc) == locs
-
-
 @generate
 def parser():
     padding = regex(r"\s*")
@@ -52,19 +48,16 @@ def parser():
     location = regex(r"[A-Z]{3}")
 
     locs: Dict[str, Tuple[str, str]] = {}
-    start: str = ""
     dir = yield padding >> direction << whitespace
     while True:
         loc = yield padding >> location << whitespace | success(None)
         if not loc:
             break
-        if not start:
-            start = loc
-        yield equals >> whitespace >> lparen
-        left = yield location
+        yield equals.desc("equals sign") >> whitespace >> lparen.desc("left paren")
+        left = yield location.desc("left")
         yield comma >> whitespace
-        right = yield location
-        yield rparen >> (padding | eof)
+        right = yield location.desc("right")
+        yield rparen.desc("right paren") >> (padding | eof)
         locs[loc] = (left, right)
 
-    return Puzzle(dir, start, locs)
+    return Puzzle(dir, "AAA", locs)

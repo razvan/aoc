@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import List
 
 from parsy import generate, regex
+import re
 
 
 @dataclass(frozen=True, slots=True)
@@ -21,5 +22,5 @@ def solve(puzzle: Puzzle) -> int:
 
 @generate
 def parser():
-    yield regex(".*")
+    yield regex(".*", re.DOTALL)
     return Puzzle()
