@@ -1,5 +1,6 @@
-from .part2 import *
 from unittest import TestCase
+
+from .part2 import Puzzle, parser, solve
 
 
 class Part2(TestCase):

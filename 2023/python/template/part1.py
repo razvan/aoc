@@ -1,6 +1,5 @@
 import re
 from dataclasses import dataclass
-from typing import List
 
 from parsy import generate, regex
 
