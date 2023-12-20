@@ -1,3 +1,4 @@
+import re
 from dataclasses import dataclass
 from typing import List
 
@@ -21,5 +22,5 @@ def solve(puzzle: Puzzle) -> int:
 
 @generate
 def parser():
-    yield regex(".*")
+    yield regex(".*", re.DOTALL)
     return Puzzle()
