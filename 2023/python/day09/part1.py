@@ -1,4 +1,3 @@
-import re
 from dataclasses import dataclass
 from typing import List
 from itertools import pairwise
@@ -21,13 +20,13 @@ def solve(puzzle: Puzzle) -> int:
 
 
 def predict(history: List[int]) -> int:
-    diffs: List[List[int]] = [history]
+    res = history[-1]
 
-    while any(diffs[-1]):
-        tmp = list(map(lambda t: t[1] - t[0], pairwise(diffs[-1])))
-        diffs.append(tmp)
+    while any(history):
+        history = list(map(lambda t: t[1] - t[0], pairwise(history)))
+        res += history[-1]
 
-    return sum([vals[-1] for vals in reversed(diffs)])
+    return res
 
 
 @generate
