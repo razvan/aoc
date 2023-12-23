@@ -4,6 +4,10 @@ from dataclasses import dataclass
 from parsy import generate, regex
 
 
+class DayXXError(Exception):
+    pass
+
+
 @dataclass(frozen=True, slots=True)
 class Puzzle:
     pass
