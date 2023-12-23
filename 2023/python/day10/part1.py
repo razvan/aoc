@@ -76,6 +76,13 @@ def peek_tile(
 def next_tile(
     curr: Loc, p: Puzzle, seen: Set[Loc], prev: Optional[Loc] = None
 ) -> Optional[Loc]:
+    """Find the next tile has not been [seen] yet and is not the [prev] tile
+    (the one before the [curr] tile).
+    The check for previous is needed to avoid a tile in the immediate
+    vicinity of the [start] location returning [start] as the next tile at
+    the beginning of the search.
+    This can happen because the [start] location is never added to the [seen]
+    set."""
     tile = p.tiles[curr.x][curr.y]
     for dir in TILE_CONN[tile]:
         if loc := peek_tile(dir, curr, p, seen, prev):
@@ -89,7 +96,6 @@ def find_loop(p: Puzzle) -> List[Loc]:
     while lres := len(res):
         prev: Optional[Loc] = res[-2] if lres > 1 else None
         next = next_tile(res[-1], p, seen, prev)
-        # print(f"----\nprev={prev}\nnext={next}\nseen={seen}\nres={res}")
         if next == p.start:
             # found the loop
             return res
