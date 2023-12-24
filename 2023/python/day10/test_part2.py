@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from .part2 import Puzzle, parser, solve, Loc, find_loop
+from .part2 import Puzzle, parser, solve, Tile, find_loop
 
 
 class Part2(TestCase):
@@ -30,7 +30,7 @@ class Part2(TestCase):
                 "....FJL-7.||.||||...",
                 "....L---J.LJ.LJLJ...",
             ],
-            start=Loc(4, 12, "S"),
+            start=Tile(4, 12, "S"),
             width=20,
             height=10,
         )
@@ -41,14 +41,14 @@ class Part2(TestCase):
             tiles=[
                 ".F----7F7F7F7F-7....",
             ],
-            start=Loc(4, 12, "S"),
+            start=Tile(4, 12, "S"),
             width=20,
             height=10,
         )
         it = iter(puzzle)
-        self.assertEqual(Loc(0, 0, "."), next(it))
-        self.assertEqual(Loc(0, 1, "F"), next(it))
-        self.assertEqual(Loc(0, 2, "-"), next(it))
+        self.assertEqual(Tile(0, 0, "."), next(it))
+        self.assertEqual(Tile(0, 1, "F"), next(it))
+        self.assertEqual(Tile(0, 2, "-"), next(it))
 
     def test_day10_part2_solve(self):
         puzzle = Puzzle(
@@ -64,7 +64,7 @@ class Part2(TestCase):
                 "....FJL-7.||.||||...",
                 "....L---J.LJ.LJLJ...",
             ],
-            start=Loc(4, 12, "S"),
+            start=Tile(4, 12, "S"),
             width=20,
             height=10,
         )
@@ -84,7 +84,7 @@ class Part2(TestCase):
                 "L.L7LFJ|||||FJL7||LJ",
                 "L7JLJL-JLJLJL--JLJ.L",
             ],
-            start=Loc(0, 4, "S"),
+            start=Tile(0, 4, "S"),
             width=20,
             height=10,
         )
@@ -93,7 +93,7 @@ class Part2(TestCase):
     def test_day10_part2_solve3(self):
         puzzle = Puzzle(
             tiles=["..F7.", ".FJ|.", "SJ.L7", "|F--J", "LJ..."],
-            start=Loc(2, 0, "S"),
+            start=Tile(2, 0, "S"),
             width=5,
             height=5,
         )
@@ -102,62 +102,62 @@ class Part2(TestCase):
     def test_day10_part2_find_loop(self):
         p = Puzzle(
             tiles=["..F7.", ".FJ|.", "SJ.L7", "|F--J", "LJ..."],
-            start=Loc(2, 0, "S"),
+            start=Tile(2, 0, "S"),
             width=5,
             height=5,
         )
         expected = [
-            Loc(x=2, y=0),
-            Loc(x=3, y=0),
-            Loc(x=4, y=0),
-            Loc(x=4, y=1),
-            Loc(x=3, y=1),
-            Loc(x=3, y=2),
-            Loc(x=3, y=3),
-            Loc(x=3, y=4),
-            Loc(x=2, y=4),
-            Loc(x=2, y=3),
-            Loc(x=1, y=3),
-            Loc(x=0, y=3),
-            Loc(x=0, y=2),
-            Loc(x=1, y=2),
-            Loc(x=1, y=1),
-            Loc(x=2, y=1),
+            Tile(x=2, y=0),
+            Tile(x=3, y=0),
+            Tile(x=4, y=0),
+            Tile(x=4, y=1),
+            Tile(x=3, y=1),
+            Tile(x=3, y=2),
+            Tile(x=3, y=3),
+            Tile(x=3, y=4),
+            Tile(x=2, y=4),
+            Tile(x=2, y=3),
+            Tile(x=1, y=3),
+            Tile(x=0, y=3),
+            Tile(x=0, y=2),
+            Tile(x=1, y=2),
+            Tile(x=1, y=1),
+            Tile(x=2, y=1),
         ]
         self.assertEqual(expected, find_loop(p))
 
     def test_day10_part2_sorted(self):
         path = [
-            Loc(x=4, y=0),
-            Loc(x=4, y=1),
-            Loc(x=2, y=0),
-            Loc(x=3, y=0),
+            Tile(x=4, y=0),
+            Tile(x=4, y=1),
+            Tile(x=2, y=0),
+            Tile(x=3, y=0),
         ]
         expected = [
-            Loc(x=2, y=0),
-            Loc(x=3, y=0),
-            Loc(x=4, y=0),
-            Loc(x=4, y=1),
+            Tile(x=2, y=0),
+            Tile(x=3, y=0),
+            Tile(x=4, y=0),
+            Tile(x=4, y=1),
         ]
         self.assertEqual(expected, sorted(path))
 
     def test_day10_part2_intersect(self):
         s1 = [
-            Loc(x=4, y=2, tile="|"),
-            Loc(x=4, y=1, tile="|"),
-            Loc(x=2, y=0, tile="|"),
-            Loc(x=3, y=2, tile="|"),
+            Tile(x=4, y=2, tile="|"),
+            Tile(x=4, y=1, tile="|"),
+            Tile(x=2, y=0, tile="|"),
+            Tile(x=3, y=2, tile="|"),
         ]
         s2 = [
-            Loc(x=4, y=0, tile="-"),
-            Loc(x=4, y=1, tile="-"),
-            Loc(x=2, y=0, tile="-"),
-            Loc(x=3, y=0, tile="-"),
+            Tile(x=4, y=0, tile="-"),
+            Tile(x=4, y=1, tile="-"),
+            Tile(x=2, y=0, tile="-"),
+            Tile(x=3, y=0, tile="-"),
         ]
         expected = set(
             [
-                Loc(x=4, y=1, tile="|"),
-                Loc(x=2, y=0, tile="-"),
+                Tile(x=4, y=1, tile="|"),
+                Tile(x=2, y=0, tile="-"),
             ]
         )
         self.assertEqual(expected, set(s1).intersection(s2))

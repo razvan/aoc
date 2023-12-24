@@ -1,6 +1,4 @@
 from dataclasses import dataclass, field
-from heapq import heapify
-from itertools import pairwise, takewhile
 from typing import (
     Dict,
     List,
@@ -16,6 +14,14 @@ class Day10Error(Exception):
     pass
 
 
+"""The connections a specific tile can have.
+
+For example, the "|" can connect to the north (N) tile and the south (S) tile,
+while the "L" tile cann connect to the north (N) tile and the east (E) tile.
+
+The start tile (S) can connect in all directions and the ground (.) tile has
+no connections at all.
+"""
 TILE_CONN: Dict[str, List[str]] = {
     "|": ["N", "S"],
     "-": ["E", "W"],
@@ -29,7 +35,7 @@ TILE_CONN: Dict[str, List[str]] = {
 
 
 @dataclass(frozen=True, slots=True, order=True)
-class Loc:
+class Tile:
     x: int
     y: int
     tile: str = field(default=".", compare=False)
@@ -38,25 +44,34 @@ class Loc:
 @dataclass(frozen=True, slots=True)
 class Puzzle:
     tiles: List[str]
-    start: Loc
+    start: Tile
     width: int
     height: int
 
-    def __iter__(self) -> Generator[Loc, None, None]:
+    def __iter__(self) -> Generator[Tile, None, None]:
         for i, row in enumerate(self.tiles):
             for j, tile in enumerate(row):
-                yield Loc(i, j, tile)
+                yield Tile(i, j, tile)
 
 
 def peek_tile(
-    dir: str, curr: Loc, p: Puzzle, seen: Set[Loc], prev: Optional[Loc] = None
-) -> Optional[Loc]:
+    dir: str, curr: Tile, p: Puzzle, seen: Set[Tile], prev: Optional[Tile] = None
+) -> Optional[Tile]:
+    """Return a tile that is connected to the [curr] tile in the [dir] direction
+    and has not been seen yet.
+
+    A tile has been seen if it's in the [seen] set or the [prev] tile.
+
+    The returned tile is added to the [seen] set.
+
+    Return None if no connecting tile is found.
+    """
     match dir:
         case "N":
             # check north
             if curr.x - 1 >= 0:
                 tile = p.tiles[curr.x - 1][curr.y]
-                north = Loc(curr.x - 1, curr.y, tile)
+                north = Tile(curr.x - 1, curr.y, tile)
                 if north not in seen and north != prev:
                     if "S" in TILE_CONN[tile]:
                         seen.add(north)
@@ -65,7 +80,7 @@ def peek_tile(
             # check south
             if curr.x + 1 < p.height:
                 tile = p.tiles[curr.x + 1][curr.y]
-                south = Loc(curr.x + 1, curr.y, tile)
+                south = Tile(curr.x + 1, curr.y, tile)
                 if south not in seen and south != prev:
                     if "N" in TILE_CONN[tile]:
                         seen.add(south)
@@ -74,7 +89,7 @@ def peek_tile(
             # check west
             if curr.y - 1 >= 0:
                 tile = p.tiles[curr.x][curr.y - 1]
-                west = Loc(curr.x, curr.y - 1, tile)
+                west = Tile(curr.x, curr.y - 1, tile)
                 if west not in seen and west != prev:
                     if "E" in TILE_CONN[tile]:
                         seen.add(west)
@@ -83,7 +98,7 @@ def peek_tile(
             # check east
             if curr.y + 1 < p.width:
                 tile = p.tiles[curr.x][curr.y + 1]
-                east = Loc(curr.x, curr.y + 1, tile)
+                east = Tile(curr.x, curr.y + 1, tile)
                 if east not in seen and east != prev:
                     if "W" in TILE_CONN[tile]:
                         seen.add(east)
@@ -92,26 +107,27 @@ def peek_tile(
 
 
 def next_tile(
-    curr: Loc, p: Puzzle, seen: Set[Loc], prev: Optional[Loc] = None
-) -> Optional[Loc]:
+    curr: Tile, p: Puzzle, seen: Set[Tile], prev: Optional[Tile] = None
+) -> Optional[Tile]:
     """Find the next tile has not been [seen] yet and is not the [prev] tile
     (the one before the [curr] tile).
+
     The check for previous is needed to avoid a tile in the immediate
     vicinity of the [start] location returning [start] as the next tile at
-    the beginning of the search.
-    This can happen because the [start] location is never added to the [seen]
-    set."""
+    the beginning of the search. This can happen because the [start] location
+    is never added to the [seen] set.
+    """
     for dir in TILE_CONN[curr.tile]:
         if loc := peek_tile(dir, curr, p, seen, prev):
             return loc
     return None
 
 
-def find_loop(p: Puzzle) -> List[Loc]:
-    res: List[Loc] = [p.start]
-    seen: Set[Loc] = set()
+def find_loop(p: Puzzle) -> List[Tile]:
+    res: List[Tile] = [p.start]
+    seen: Set[Tile] = set()
     while lres := len(res):
-        prev: Optional[Loc] = res[-2] if lres > 1 else None
+        prev: Optional[Tile] = res[-2] if lres > 1 else None
         next = next_tile(res[-1], p, seen, prev)
         if next == p.start:
             # found the loop
@@ -125,7 +141,7 @@ def find_loop(p: Puzzle) -> List[Loc]:
     raise Day10Error("Failed to find a loop starting at {}".format(p.start))
 
 
-def find_poly_area(poly: List[Loc], puzzle: Puzzle) -> int:
+def find_poly_area(poly: List[Tile], puzzle: Puzzle) -> int:
     """
     Find the area of the polygon (i.e. number of locations within [poly] than
     are not on the polygon it's self.)
@@ -136,7 +152,7 @@ def find_poly_area(poly: List[Loc], puzzle: Puzzle) -> int:
     # to check to a very small fraction of the input.
     tiles = set(iter(puzzle)) - set(poly)
 
-    def _is_in(loc: Loc) -> bool:
+    def _is_in(loc: Tile) -> bool:
         """
         Count the number of [path] locations exist on a horizontal line before
         the given [loc] is reached.
@@ -184,7 +200,7 @@ def parser():
             break
         if not start:
             try:
-                start = Loc(len(tiles), line.index("S"), "S")
+                start = Tile(len(tiles), line.index("S"), "S")
             except ValueError:
                 pass
         tiles.append(line)
