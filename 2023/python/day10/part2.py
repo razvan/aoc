@@ -126,43 +126,45 @@ def find_loop(p: Puzzle) -> List[Loc]:
 
 
 def find_poly_area(poly: List[Loc], puzzle: Puzzle) -> int:
-    # spoly = sorted(poly)
+    """
+    Find the area of the polygon (i.e. number of locations within [poly] than
+    are not on the polygon it's self.)
+    """
 
-    # print(f"spoly={spoly}")
+    # Remove the poly locations from the puzzle tiles.
+    # This is huge performance boost because it reduces the number of locations
+    # to check to a very small fraction of the input.
+    tiles = set(iter(puzzle)) - set(poly)
 
     def _is_in(loc: Loc) -> bool:
+        """
+        Count the number of [path] locations exist on a horizontal line before
+        the given [loc] is reached.
+
+        The tests pass *BUT* I don't really understand why disregarding [-JL]
+        when scanning the tiles gives the correct result.
+
+        See: https://en.wikipedia.org/wiki/Point_in_polygon
+        """
         res = 0
         for p in poly:
-            # print(f"----\ncomparing loc={loc} with p={p}")
             if p.x != loc.x:
-                # print("Skip. Not on the same line")
                 continue
             if p.y >= loc.y:
-                # print("Skip. loc is before p")
-                continue
-            if loc in poly:
-                # print("Skip. loc is on poly")
                 continue
             if p.tile == "-" or p.tile == "J" or p.tile == "L":
-                # print("Skip. p is in [-JL]")
                 continue
-            # print("Found. p is a bar before loc")
             res += 1
         return res % 2 == 1
 
-    _in = list(filter(_is_in, iter(puzzle)))
-    # print(_in)
+    _in = list(filter(_is_in, iter(tiles)))
     return len(_in)
 
 
 def run(f: str):
     with open(f) as input:
         puzzle = parser.parse(input.read())
-        # This takes very long to run so it's basically not solved.
-        # The tests pass but I doun't know if the actual result would be correct
-        # because I don't understand why disregarding [-JL] when scanning the tiles
-        # gives the correct result.
-        print("Day 10: part 2 is NOT SOLVED!")  # .format(solve(puzzle)))
+        print("Day 10: part 2 is {}".format(solve(puzzle)))
 
 
 def solve(puzzle: Puzzle) -> int:
