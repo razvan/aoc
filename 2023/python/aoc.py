@@ -7,6 +7,7 @@ import day07
 import day08
 import day09
 import day10
+import day11
 
 
 def main():
@@ -19,6 +20,7 @@ def main():
     day08.main(["../input/day08/input.txt"])
     day09.main(["../input/day09/input.txt"])
     day10.main(["../input/day10/input.txt"])
+    day11.main(["../input/day11/input.txt"])
 
 
 if __name__ == "__main__":
