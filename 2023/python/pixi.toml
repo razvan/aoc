@@ -16,3 +16,4 @@ parsy = "2.1.*"
 
 [host-dependencies]
 bpython = "0.24.*"
+pre-commit = ">=3.6.0,<3.7"
