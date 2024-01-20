@@ -26,15 +26,13 @@ repos:
     rev: 'v1.8.0'
     hooks:
       - id: mypy
-        args: ['--install-types', '--non-interactive']
-        additional_dependencies:
-          - "parsy>=2.1.*"
+        args: ['--ignore-missing-imports', '--install-types', '--non-interactive']
         exclude: template/
   - repo: local
     hooks:
-      - id: unittest
-        name: unittest
-        entry: python -m unittest discover -v -s src/
+      - id: test
+        name: test
+        entry: python -m unittest discover -v 2023/python
         additional_dependencies:
           - "parsy>=2.1.*"
         language: python

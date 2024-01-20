@@ -1,9 +1,7 @@
-import sys
 from dataclasses import dataclass, field
 from typing import List, Iterable, Tuple
 from functools import reduce
 from itertools import pairwise
-from pprint import pprint
 
 
 @dataclass(frozen=True, slots=True)
@@ -76,8 +74,8 @@ class RangeMap:
                 return d
         return s
 
-    def dest_segment(self, sgmts: Iterable[Segment]) -> Iterable[Segment]:
-        res = []
+    def dest_segment(self, sgmts: Iterable[Segment]) -> List[Segment]:
+        res: List[Segment] = []
         ir = iter(self.ranges)
         others, mapped = next(ir).merge(sgmts)
         res.extend(mapped)

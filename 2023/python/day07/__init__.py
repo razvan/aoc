@@ -1,4 +1,3 @@
-import sys
 from .part1 import parser as part1_parser
 from .part2 import parser as part2_parser
 from typing import List

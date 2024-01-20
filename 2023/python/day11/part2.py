@@ -6,7 +6,7 @@
     minutes before I stopped it. It also used up ~20GB of memory at the time.
 
     This implementation doesn't actually expand the original input in any way.
-    Instead it computes two lists (one for the x axis and one for the y axis) of 
+    Instead it computes two lists (one for the x axis and one for the y axis) of
     (start, offset) tuples. The start value represents the start index (in the
     original input) of an expansion and the offset values represent the amount
     of space to add to a coordinate to arrive at the current position.

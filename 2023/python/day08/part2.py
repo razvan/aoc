@@ -55,11 +55,11 @@ def solve_brute_force(puzzle: Puzzle) -> int:
 
 
 def find_start_loc(locs: Iterable[str]) -> List[str]:
-    return [l for l in locs if l.endswith("A")]
+    return [location for location in locs if location.endswith("A")]
 
 
 def is_end_loc(loc: List[str]) -> bool:
-    return all((l.endswith("Z") for l in loc))
+    return all((location.endswith("Z") for location in loc))
 
 
 def next_loc(dir: str, start: List[str], locs: Dict[str, Tuple[str, str]]) -> List[str]:
