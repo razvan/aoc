@@ -9,7 +9,8 @@ class Day12Error(Exception):
 
 @dataclass(frozen=True, slots=True)
 class Puzzle:
-    lines: dict[str, list[int]] = field(default_factory=dict)
+    lines: list[str] = field(default_factory=list)
+    groups: list[list[int]] = field(default_factory=list)
 
 
 def valid(line: str, damaged_groups: list[int]) -> bool:
@@ -25,9 +26,11 @@ def valid(line: str, damaged_groups: list[int]) -> bool:
 def gen(line_with_qmarks: str) -> Generator[str, None, None]:
     qindex: list[int] = [i for i, c in enumerate(line_with_qmarks) if c == "?"]
 
-    for mask in range(1 << len(qindex)):
+    n = len(qindex)
+    for mask in range(1 << n):
         line: list[str] = list(line_with_qmarks)
         for i, j in enumerate(qindex):
+            # print(f"{mask=}, {i=}, {j=}")
             if mask & (1 << i):
                 line[j] = "#"
             else:
@@ -43,17 +46,19 @@ def run(f: str):
 
 def solve(puzzle: Puzzle) -> int:
     count = 0
-    for line, groups in puzzle.lines.items():
-        for possible_line in gen(line):
-            if valid(possible_line, groups):
-                count += 1
+    for line, groups in zip(puzzle.lines, puzzle.groups):
+        p = sum((1 for possible_line in gen(line) if valid(possible_line, groups)))
+        # print(f"{line} {p}")
+        count += p
     return count
 
 
 def parse(input: str) -> Puzzle:
-    result: dict[str, list[int]] = {}
+    lines = []
+    groups = []
     for line in input.splitlines():
         parts = line.split(" ")
         if len(parts) == 2:
-            result[parts[0]] = [int(c) for c in parts[1].split(",")]
-    return Puzzle(result)
+            lines.append(parts[0])
+            groups.append(list(map(int, parts[1].split(","))))
+    return Puzzle(lines, groups)
