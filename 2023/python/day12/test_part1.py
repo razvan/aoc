@@ -67,16 +67,11 @@ class Part1(TestCase):
             self.assertTrue(valid(line, groups))
 
     def test_gen(self):
-        got = set(gen("???"))
+        got = set(gen("???", 2))
         expected = set(
             [
-                "...",
-                "###",
-                "#..",
                 "##.",
-                ".#.",
                 ".##",
-                "..#",
                 "#.#",
             ]
         )

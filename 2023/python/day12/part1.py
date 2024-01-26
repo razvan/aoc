@@ -1,6 +1,7 @@
 import re
 from dataclasses import dataclass, field
 from typing import Generator
+import itertools
 
 
 class Day12Error(Exception):
@@ -23,15 +24,17 @@ def valid(line: str, damaged_groups: list[int]) -> bool:
     return group_lengths == damaged_groups
 
 
-def gen(line_with_qmarks: str) -> Generator[str, None, None]:
+def gen(
+    line_with_qmarks: str, expected_springs_count: int
+) -> Generator[str, None, None]:
     qindex: list[int] = [i for i, c in enumerate(line_with_qmarks) if c == "?"]
+    missing_springs_count = expected_springs_count - line_with_qmarks.count("#")
 
-    n = len(qindex)
-    for mask in range(1 << n):
+    for mask in itertools.combinations(range(len(qindex)), missing_springs_count):
         line: list[str] = list(line_with_qmarks)
         for i, j in enumerate(qindex):
             # print(f"{mask=}, {i=}, {j=}")
-            if mask & (1 << i):
+            if i in mask:
                 line[j] = "#"
             else:
                 line[j] = "."
@@ -47,7 +50,13 @@ def run(f: str):
 def solve(puzzle: Puzzle) -> int:
     count = 0
     for line, groups in zip(puzzle.lines, puzzle.groups):
-        p = sum((1 for possible_line in gen(line) if valid(possible_line, groups)))
+        p = sum(
+            (
+                1
+                for possible_line in gen(line, sum(groups))
+                if valid(possible_line, groups)
+            )
+        )
         # print(f"{line} {p}")
         count += p
     return count
