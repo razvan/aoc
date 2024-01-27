@@ -13,7 +13,14 @@ import sys
 
 
 def main():
-    match sys.argv[1]:
+    day = "all"
+    match len(sys.argv):
+        case 2:
+            day = sys.argv[1]
+        case _:
+            day = "all"
+
+    match day:
         case "day02":
             day02.main("../input/day02/input")
         case "day03":
@@ -36,7 +43,7 @@ def main():
             day11.main(["../input/day11/input.txt"])
         case "day12":
             day12.main(["../input/day12/input.txt"])
-        case _:
+        case "all":
             day02.main("../input/day02/input")
             day03.main("../input/day03/input")
             day04.main("../input/day04/input.txt")
@@ -48,6 +55,8 @@ def main():
             day10.main(["../input/day10/input.txt"])
             day11.main(["../input/day11/input.txt"])
             day12.main(["../input/day12/input.txt"])
+        case d:
+            print(f"Invalid day {d}")
 
 
 if __name__ == "__main__":
