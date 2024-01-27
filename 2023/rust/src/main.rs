@@ -1,8 +1,10 @@
 mod day12;
 
-use anyhow::Result;
+use anyhow::{Context, Result};
+use std::env;
 
 fn main() -> Result<()> {
-    day12::run()?;
+    let input = env::args().nth(1).context("Please supply an input")?;
+    day12::run(&input)?;
     Ok(())
 }

@@ -1,16 +1,14 @@
 use itertools::Itertools;
 use std::{
     collections::HashSet,
-    env, fs,
+    fs,
     io::{self, BufRead},
 };
 
 use anyhow::{Context, Result};
 
-pub fn run() -> Result<()> {
-    let input = env::args().nth(1).context("Please supply an input")?;
-
-    let file = fs::File::open(input).context("Could not open input file {input}")?;
+pub fn run(input: &str) -> Result<()> {
+    let file = fs::File::open(input).context(format!("Could not open input file {input}"))?;
     let mut reader = io::BufReader::new(file);
     let puzzle = parse_puzzle(&mut reader)?;
 
