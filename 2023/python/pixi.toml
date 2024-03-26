@@ -12,9 +12,10 @@ aoc = "python aoc.py"
 pc = "pre-commit run"
 
 [dependencies]
-python = "3.12.0.*"
+python = "3.12"
 parsy = "2.1.*"
+numpy = ">=1.26.4,<1.27"
 
 [host-dependencies]
-bpython = "0.24.*"
+bpython = "0.24"
 pre-commit = ">=3.6.0,<3.7"

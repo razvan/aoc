@@ -9,6 +9,7 @@ import day09
 import day10
 import day11
 import day12
+import day13
 import sys
 
 
@@ -43,6 +44,8 @@ def main():
             day11.main(["../input/day11/input.txt"])
         case "day12":
             day12.main(["../input/day12/input.txt"])
+        case "day13":
+            day13.main(["../input/day13/input.txt"])
         case "all":
             day02.main("../input/day02/input")
             day03.main("../input/day03/input")
@@ -55,6 +58,7 @@ def main():
             day10.main(["../input/day10/input.txt"])
             day11.main(["../input/day11/input.txt"])
             day12.main(["../input/day12/input.txt"])
+            day13.main(["../input/day13/input.txt"])
         case d:
             print(f"Invalid day {d}")
 
